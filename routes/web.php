@@ -23,23 +23,22 @@ Auth::routes();
 
 Route::get('/home', 'ClientController@index')->name('home');
 
-// admin
-
-// hq
-
+// admin hq
 
 Route::get('hq/dashboard', 'AdminController@index')->name('admin.dashboard');
 Route::get('hq/', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 Route::post('hq/', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 
-// operator
-
-// mg
+// operator mg
 
 Route::get('mg/dashboard', 'OperatorController@index')->name('operator.dashboard');
 Route::get('mg/', 'Auth\OperatorLoginController@showLoginForm')->name('operator.login');
 Route::post('mg/', 'Auth\OperatorLoginController@login')->name('operator.login.submit');
- 
+
+Route::post('mg/register', 'Auth\RegisterOperatorController@register')->name('operator.register');
+Route::delete('mg/destroyOperator', 'AdminController@destroyOperator')->name('admin.destroyOperator');
+Route::patch('mg/updateOperator', 'AdminController@updateOperator')->name('admin.updateOperator');
+
 // password reset routes admin
 
 Route::post('hq/password/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');

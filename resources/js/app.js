@@ -27,6 +27,22 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 const app = new Vue({
     el: '#app',
+    data: {
+    	search: '',
+    	isThereAdmins: 0
+    },
+    methods: {
+    	searchit(){
+    		axios.get('api/findAdmin?q=' + this.search)
+    		.then((data) => {
+    			this.isThereAdmins = data.data;
+    		})
+    		.catch(() => {
+
+    		})
+    	}
+    }
 });

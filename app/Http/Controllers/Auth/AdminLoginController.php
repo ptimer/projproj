@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use App\Admin;
 
 class AdminLoginController extends Controller
 {
@@ -32,5 +33,20 @@ class AdminLoginController extends Controller
     	}
 
     	return redirect()->back()->withInput($request->only('email', 'remember'));
+    }
+
+
+    // FOR AJAX
+
+    public function search(Request $request)
+    {
+        $users = Admin::where('email', $request->q)->first();
+
+        if($users != null){
+            return 1;
+        }else{
+            return "Ничего нет иди домой";
+        }
+        
     }
 }

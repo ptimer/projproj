@@ -25,4 +25,5 @@ class OperatorController extends Controller
     {
         return view('operator.dashboard');
     }
+
 }
