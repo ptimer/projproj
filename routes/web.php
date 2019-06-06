@@ -39,10 +39,17 @@ Route::post('hq/', 'Auth\AdminLoginController@login')->name('admin.login.submit'
 Route::get('mg/dashboard', 'OperatorController@index')->name('operator.dashboard');
 Route::get('mg/', 'Auth\OperatorLoginController@showLoginForm')->name('operator.login');
 Route::post('mg/', 'Auth\OperatorLoginController@login')->name('operator.login.submit');
-
-// password reset routes
+ 
+// password reset routes admin
 
 Route::post('hq/password/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
 Route::get('hq/password/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
 Route::post('hq/password/reset', 'Auth\AdminResetPasswordController@reset');
 Route::get('hq/password/reset{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
+
+// password reset routes operator
+
+Route::post('mg/password/email', 'Auth\OperatorForgotPasswordController@sendResetLinkEmail')->name('operator.password.email');
+Route::get('mg/password/reset', 'Auth\OperatorForgotPasswordController@showLinkRequestForm')->name('operator.password.request');
+Route::post('mg/password/reset', 'Auth\OperatorResetPasswordController@reset');
+Route::get('mg/password/reset{token}', 'Auth\OperatorResetPasswordController@showResetForm')->name('operator.password.reset');

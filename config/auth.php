@@ -123,6 +123,12 @@ return [
             'expire' => 60,
         ],
 
+        'operators' => [
+            'provider' => 'operators',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
     ],
 
 ];
