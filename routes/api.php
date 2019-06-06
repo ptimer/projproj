@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('findAdmin', 'Auth\AdminLoginController@search')
-->middleware('throttle:60');
+->middleware('throttle');

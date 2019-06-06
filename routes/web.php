@@ -29,6 +29,7 @@ Route::get('hq/dashboard', 'AdminController@index')->name('admin.dashboard');
 Route::get('hq/', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 Route::post('hq/', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 
+
 // operator mg
 
 Route::get('mg/dashboard', 'OperatorController@index')->name('operator.dashboard');

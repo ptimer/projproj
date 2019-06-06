@@ -49355,15 +49355,30 @@ var app = new Vue({
   el: '#app',
   data: {
     search: '',
-    isThereAdmins: 0
+    isThereAdmins: 0,
+    timer: null
   },
   methods: {
     searchit: function searchit() {
       var _this = this;
 
-      axios.get('api/findAdmin?q=' + this.search).then(function (data) {
-        _this.isThereAdmins = data.data;
-      })["catch"](function () {});
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+
+      this.timer = setTimeout(function () {
+        axios.get('api/findAdmin?q=' + _this.search).then(function (data) {
+          _this.isThereAdmins = data.data;
+        })["catch"](function () {});
+      }, 800);
+    }
+  },
+  watch: {
+    isThereAdmins: function isThereAdmins(n, o) {
+      if (n == 1) {
+        $('#modalLogin').modal('show');
+      }
     }
   }
 });

@@ -32,17 +32,34 @@ const app = new Vue({
     el: '#app',
     data: {
     	search: '',
-    	isThereAdmins: 0
+    	isThereAdmins: 0,
+        timer: null
     },
     methods: {
     	searchit(){
-    		axios.get('api/findAdmin?q=' + this.search)
-    		.then((data) => {
-    			this.isThereAdmins = data.data;
-    		})
-    		.catch(() => {
+            if (this.timer) {
+                clearTimeout(this.timer);
+                this.timer = null;
+            }
+            this.timer = setTimeout(() => {
+                    axios.get('api/findAdmin?q=' + this.search)
+                    .then((data) => {
+                        this.isThereAdmins = data.data;
+                    })
+                    .catch(() => {
 
-    		})
+                    })
+            }, 800);
+    	}
+    },
+
+    watch: {
+    	isThereAdmins: function(n , o){
+    		if(n == 1)
+    		{
+    			$('#modalLogin').modal('show'); 
+    		}
+    		
     	}
     }
 });
