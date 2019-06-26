@@ -13,9 +13,7 @@
 
 // main page and others
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', 'HomeController@index')->name('welcome');
 
 Auth::routes();
 
@@ -29,6 +27,9 @@ Route::get('hq/dashboard', 'AdminController@index')->name('admin.dashboard');
 Route::get('hq/', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 Route::post('hq/', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 
+Route::get('hq/NewOperator', 'AdminController@NewOperator')->name('admin.NewOperator');
+Route::get('hq/UpdateOperator/{id}', 'AdminController@editOperator')->name('admin.editOperator');
+
 
 // operator mg
 
@@ -36,7 +37,7 @@ Route::get('mg/dashboard', 'OperatorController@index')->name('operator.dashboard
 Route::get('mg/', 'Auth\OperatorLoginController@showLoginForm')->name('operator.login');
 Route::post('mg/', 'Auth\OperatorLoginController@login')->name('operator.login.submit');
 
-Route::post('mg/register', 'Auth\RegisterOperatorController@register')->name('operator.register');
+Route::post('mg/register', 'AdminController@registerOperator')->name('operator.register');
 Route::delete('mg/destroyOperator', 'AdminController@destroyOperator')->name('admin.destroyOperator');
 Route::patch('mg/updateOperator', 'AdminController@updateOperator')->name('admin.updateOperator');
 

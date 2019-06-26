@@ -38,11 +38,61 @@ class AdminController extends Controller
         ]);
     }
 
+
+
+
+    public function NewOperator()
+    {
+        return view('admin.createOperator');
+    }
+
+
+
+
+
+    public function EditOperator($id)
+    {
+
+        $operator = Operator::findOrFail($id);
+
+        return view('admin.editOperator', ['operator' => $operator]);
+    }
+
+
+
     protected function destroyOperator(Request $request)
     {
         Operator::findOrFail($request->id)->delete();
         return redirect()->back();
     }
+
+
+
+
+    protected function registerOperator(Request $request)
+    {
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:operators'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $operator = new Operator();
+
+        $operator->name = $request->get('name');
+        $operator->email = $request->get('email');
+        $operator->password = Hash::make($request->get('password'));
+
+        $operator->save();
+
+        if($operator){
+           return redirect()->route('admin.dashboard'); 
+        }
+        return $operator;
+    }
+
+
+
 
 
     protected function updateOperator(Request $request)
@@ -74,7 +124,10 @@ class AdminController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->back();
+        if($operator){
+           return redirect()->route('admin.dashboard'); 
+        }
+        return $operator;
     }
 
 }

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+
 
 class RegisterOperatorController extends Controller
 {
@@ -28,7 +30,7 @@ class RegisterOperatorController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/hq/dashboard';
+    //protected $redirectTo = '/hq/dashboard';
 
     /**
      * Create a new controller instance.
@@ -41,16 +43,17 @@ class RegisterOperatorController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return \App\User
      */
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:operators'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -63,7 +66,7 @@ class RegisterOperatorController extends Controller
      */
     protected function create(array $data)
     {
-        return Operator::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
